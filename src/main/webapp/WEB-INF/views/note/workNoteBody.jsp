@@ -58,19 +58,22 @@ li {
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
    		$(document).ready(function(){
+   			//전체 글을 감싸는 div 를 가지고 와서 위치를 알아낸다.  
+   			
    			
    			//3가지 리스트를 호출하기
    			pagination(1 , '01' , null)
    			pagination(1 , '02' , null)
    			pagination(1 , '03' , null)
    			
+   			var offset = $('#ThreeListBox').offset();
+   			$('html , body').animate({scrollTop : offset.top} , 2500)   		  
    			
     		d3.selectAll(".evalbar")
     		  .datum(function(){ return this.dataset; })
     		  .style("width" , "12px")
     		  .transition().duration(3000)
     		  .style("width" , d => d.val);
-    		  
     		  //중요한 글만 조회하기 
     		  $('.importance').on('click',function(){
     			  //프로젝트 번호가지고 오기 

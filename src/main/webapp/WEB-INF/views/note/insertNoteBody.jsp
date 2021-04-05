@@ -83,6 +83,13 @@ select {
 			$('#starCheck').val('yello')
 		}
 		
+		function ProjectProgressOption(val){
+			if(val == '01')
+			$('#progress').val('0').prop("selected" , true); 
+			else if(val == '03')
+			$('#progress').val('100').prop("selected" , true); 	
+		}
+		
 </script>
 
 
@@ -201,7 +208,7 @@ select {
 										<br> <input type="text" style="display: none; margin-left: 1%; margin-bottom: 10px;" value="" name="etc" id="etcSelect" placeholder="업무분류를 입력해 주세요"> <input type="hidden" value="" name="etc2"> <small class="form-text"> &nbsp;&nbsp;&nbsp; : 원하는 업무를 선택하세요 직접 입력도 가능합니다.</small>
 									</div>
 									<div class="form-row">
-										<label class="form-control col-1 lab" style="border: none"><i class="icon-chart icons"></i>상태</label> <select id="status" name="n_state"  style="margin-bottom: 10px;">
+										<label class="form-control col-1 lab" style="border: none"><i class="icon-chart icons"></i>상태</label> <select id="status" name="n_state" onchange="ProjectProgressOption(this.value)"style="margin-bottom: 10px;">
 											<option value="01">진행전</option>
 											<option value="02">진행중</option>
 											<option value="03">진행완료</option>
@@ -210,6 +217,7 @@ select {
 
 									<div class="form-row">
 										<label class="form-control col-1 lab" style="border: none"><i class="icon-chart icons"></i>진행률</label> <select id="progress" name="progress" style="margin-bottom: 10px;">
+											<option value="0">0%</option>
 											<option value="10">10%</option>
 											<option value="20">20%</option>
 											<option value="30">30%</option>

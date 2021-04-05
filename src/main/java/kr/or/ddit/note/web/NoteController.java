@@ -71,7 +71,6 @@ public class NoteController {
 		String clientId = noteService.checkFinishProjectBtnAble(p_code);
 		//프로젝트 상태가 완성일때는 버튼을 없애야함. 
 		 String pstate = projectService.viewProject(p_code).getP_state();
-		 logger.debug("???????shit{}" , pstate);
 		 if(clientId.equals(checkPartOrClient) && !projectService.viewProject(p_code).getP_state().equals("09")) {
 			model.addAttribute("ableFinishProjectBtn", "true");
 		}
@@ -132,20 +131,20 @@ public class NoteController {
 		// checkListType 01이면 진행전 리스트 02이면 진행중 리스트 03이면 진행후 리스트
 		noteVo.setN_state(checkListType);
 		noteVo.setP_code(p_code);
-
 		// 공통 적용 model
 		// beforeList의페이지가 몇번인지..
 		model.addAttribute("p_code", p_code);
 		// 현재 페이지
-
 		// 중요한애를 조회하는지 아닌지
 		model.addAttribute("key", key);
 		// starcheck 가 f이면 전체조회 t이면 중요한것만 조회
 		model.addAttribute("starCheck", starCheck);
-
 		if (checkListType.equals("01")) { // 진행전 리스트
+			//리스트의 갯수
 			beforeListCnt = noteService.countList(noteVo);
+			//가져올 노트 리스트 전체 
 			beforeListNote = noteService.selectNoteListBefore(map);
+			//페이징처리시 페이지의 갯수
 			beforePagination = (int) Math.ceil(beforeListCnt / (double) 5);
 			model.addAttribute("page1", page);
 			model.addAttribute("beforeListCnt", beforeListCnt);
@@ -329,8 +328,12 @@ public class NoteController {
 				&& !noteVo.getCategory().equals("safety") && !noteVo.getCategory().equals("test")) {
 			model.addAttribute("etcCheck", "etcCheck");
 		}
-
+		
+		
+		
 		// 저장된 date 타입을 살펴보자
+		
+		
 		model.addAttribute("noteVo", noteService.selectNote(n_no));
 
 		return "t/note/updateNote";

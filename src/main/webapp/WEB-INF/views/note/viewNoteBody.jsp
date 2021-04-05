@@ -171,7 +171,6 @@ body {
 			
 			
 			// 상위 댓글 찾기 (댓글을 클릭하면 부모댓글의 색깔이 깜빡하고 변했다가 다시 돌아오게 할 것임)
-
 			$('.ajaxReplyBlock').on('mouseover' , '.eachReplyTr'  , function(){
 				var r_parent = $(this).data('pno');
 				if(r_parent == 0 ){
@@ -179,16 +178,10 @@ body {
 				}
 				//현재 댓글 번호 가지고 오기 
 				var r_no = $(this).data('rnumber');
-				
-				
 				$('#replyBody').children('#' + r_parent ).addClass('changePink');
-				
-				
-					
 			})
 			
 			$('.ajaxReplyBlock').on('mouseleave' , '.eachReplyTr'  , function(){
-				
 				var r_parent = $(this).data('pno');
 				if(r_parent == 0 ){
 					return false;
@@ -239,23 +232,20 @@ body {
 				
 			})
 			
-			//자식 댓글창 열기
-			
-			
+			//자식 댓글창 입력 열기
 		 	$('.ajaxReplyBlock').on('click' , '.ChildReplyViewBtn'  , function(){
 		 		
-		 		//현재 부모가 될 현재 댓글의 r_no 
+		 		//현재댓글을 클릭하면 그 댓글은 부모댓글이 되고 그 하위 댓글을 작성하는 것이다. r_parentNum 은 현재 댓글의 댓글번호이고 이것을 지금 입력할 자식댓글행의 부모댓글번호컬럼에 insert 해준다.
 		 		var r_parentNum = $(this).data('up'); 
-		 		
-		 		
 		  		var plusTr = "";
-		 		 plusTr += "<tr style='height: 150px;'><th></th>"
-		 		 plusTr += "<th colspan='4' style='width: 200px; height: 50px;'><span>답글 입력</span><br><textarea rows='3' cols='130' class='replyReplyCont'></textarea>"
-		 		 plusTr += "<input type='button' class='btn float-right btn-primary insertReplyReply' " + "id='" + r_parentNum + "'"
-		 		 plusTr += "value='답글등록'></th>"
-		 		 plusTr += "<th style='width: 200px;' scope='col'></th>"
-		 		 plusTr += "<th style='width: 180px;' scope='col'></th>"
-		 		 plusTr += "</tr>"
+			 		plusTr += "<tr style='height: 150px;'>"
+			 		plusTr += 	"<th></th>"
+			 		plusTr += 	"<th colspan='4' style='width: 200px; height: 50px;'><span>답글 입력</span><br><textarea rows='3' cols='130' class='replyReplyCont'></textarea>"
+			 		plusTr += 		"<input type='button' class='btn float-right btn-primary insertReplyReply' " + "id='" + r_parentNum + "'" + "value='답글등록'>"
+			 		plusTr += 	"</th>"
+			 		plusTr += 	"<th style='width: 200px;' scope='col'></th>"
+			 		plusTr += 	"<th style='width: 180px;' scope='col'></th>"
+			 		plusTr += "</tr>"
 		 		
 		 		$(this).parent().parent().after(plusTr); 
 		 		
@@ -334,11 +324,11 @@ body {
 				var updateReplyNo = $(this).data('rnono');
 				var plusTr = "";
 		 		 plusTr += "<tr style='height: 150px;'><th></th>"
-		 		 plusTr += "<th colspan='4' style='width: 200px; height: 50px;'><span>댓글 수정</span><br><textarea rows='3' cols='130' class='replyReplyCont'>" + updateCont + "</textarea>"
-		 		 plusTr += "<input type='button' class='btn float-right btn-primary updateReply' " + "id='" + updateReplyNo  + "'"
-		 		 plusTr += "value='수정'></th>"
-		 		 plusTr += "<th style='width: 200px;' scope='col'></th>"
-		 		 plusTr += "<th style='width: 180px;' scope='col'></th>"
+		 		 plusTr +=     "<th colspan='4' style='width: 200px; height: 50px;'><span>댓글 수정</span><br><textarea rows='3' cols='130' class='replyReplyCont'>" + updateCont + "</textarea>"
+		 		 plusTr += 	       "<input type='button' class='btn float-right btn-primary updateReply' " + "id='" + updateReplyNo  + "'" + "value='수정'>"
+		 		plusTr  +=     "</th>"
+		 		 plusTr += 	   "<th style='width: 200px;' scope='col'></th>"
+		 		 plusTr += 	   "<th style='width: 180px;' scope='col'></th>"
 		 		 plusTr += "</tr>"
 		 		$(this).parent().parent().after(plusTr); 
 			});
@@ -532,7 +522,6 @@ body {
 											</thead>
 											<tbody id="replyBody">
 												<c:forEach items="${replyVoList}" var="replyVo">
-
 													<c:choose>
 														<c:when test="${replyVo.r_parent_name != null }">
 															<tr class="eachReplyTr replyReply" id="${replyVo.r_no}" data-rnumber="${replyVo.r_no}" data-pno="${replyVo.r_parent}">
@@ -544,9 +533,14 @@ body {
 													<th scope="row" style="width: 200px;">${replyVo.user_id }</th>
 													<c:choose>
 														<c:when test="${replyVo.r_parent_name != null }">
-															<td class="Cont" id="${replyVo.r_no}" colspan="4">&emsp;&emsp;&emsp;&emsp;<c:if test="${replyVo.r_cont == '삭제된 댓글입니다.'}">
+															<td class="Cont" id="${replyVo.r_no}" colspan="4">&emsp;&emsp;&emsp;&emsp;
+																<c:if test="${replyVo.r_cont == '삭제된 댓글입니다.'}">
 																	<i id="trashIcon" class="fas fa-trash-alt trashIcon"></i>
-																</c:if> <span class="replyParentId">${replyVo.r_parent_name}</span> 답글 :<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="replyContSpan">${replyVo.r_cont }</span></td>
+																</c:if> 
+																<span class="replyParentId">${replyVo.r_parent_name}</span> 
+																답글 :<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+																<span class="replyContSpan">${replyVo.r_cont }</span>
+															</td>
 														</c:when>
 
 														<c:otherwise>

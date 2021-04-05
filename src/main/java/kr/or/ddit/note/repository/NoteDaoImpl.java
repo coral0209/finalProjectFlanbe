@@ -56,7 +56,6 @@ public class NoteDaoImpl implements NoteDao {
 
 	@Override
 	public int insertNote(NoteVo noteVo) {
-		String userid = noteVo.getUser_id();
 		sqlSessionTemplate.insert("note.insertNote", noteVo) ;
 		int n_no = noteVo.getN_no();
 		return n_no; 
